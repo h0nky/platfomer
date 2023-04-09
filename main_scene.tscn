@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcjxi7740u26t"]
+
+[ext_resource type="PackedScene" uid="uid://ctupgfnqrkaeq" path="res://character.tscn" id="1_1wgov"]
+[ext_resource type="PackedScene" uid="uid://d0r0pbbxxw3o3" path="res://platform.tscn" id="2_mtd3d"]
+
+[node name="MainScene" type="Node2D"]
+
+[node name="character" parent="." instance=ExtResource("1_1wgov")]
+position = Vector2(75, 294)
+scale = Vector2(0.5, 0.5)
+
+[node name="Platform" parent="." instance=ExtResource("2_mtd3d")]
+position = Vector2(40, 440)
