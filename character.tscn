@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://ctupgfnqrkaeq"]
+[gd_scene load_steps=60 format=3 uid="uid://ctupgfnqrkaeq"]
 
 [ext_resource type="Script" path="res://character.gd" id="1_g1l4r"]
 [ext_resource type="Texture2D" uid="uid://dbt10hj1ion27" path="res://Art/Character/Idle/Idle-Sheet.png" id="2_wmvkb"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://b4x1fc2x5pa5s" path="res://Art/Character/Run/Run-Sheet.png" id="3_n1msd"]
 [ext_resource type="Texture2D" uid="uid://dpg21exl68xlg" path="res://Art/Character/Jump-Start/Jump-Start-Sheet.png" id="4_0uvvd"]
 [ext_resource type="Texture2D" uid="uid://bcemkd4u1tuee" path="res://Art/Character/Jumlp-All/Jump-All-Sheet.png" id="5_efk8x"]
+[ext_resource type="Script" path="res://CharacterStateMachine.gd" id="7_bbe48"]
+[ext_resource type="Script" path="res://GroundState.gd" id="8_q5qcn"]
+[ext_resource type="Script" path="res://AirState.gd" id="9_cfbwr"]
+[ext_resource type="Script" path="res://LandingState.gd" id="10_irdnx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v4c50"]
 atlas = ExtResource("2_wmvkb")
@@ -458,5 +462,20 @@ tree_root = SubResource("AnimationNodeStateMachine_oho6k")
 anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_s12lf")
 parameters/Move/blend_position = 0.025
+
+[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("7_bbe48")
+current_state = NodePath("Ground")
+
+[node name="Ground" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("8_q5qcn")
+can_move = false
+
+[node name="Air" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("9_cfbwr")
+
+[node name="Landing" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("10_irdnx")
+can_move = false
 
 [connection signal="animation_finished" from="CharacterSprite2D" to="." method="_on_character_sprite_2d_animation_finished"]
