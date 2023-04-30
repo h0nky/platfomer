@@ -5,6 +5,16 @@ class_name State
 @export var can_move: bool = true
 
 var character : CharacterBody2D
-var nextState : State
+var next_state : State
 
-#func state_input(event):
+func state_process(delta):
+	pass
+
+func state_input(event : InputEvent):
+	pass
+
+func on_enter():
+	pass
+
+func on_exit():
+	pass
