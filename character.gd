@@ -1,8 +1,6 @@
 extends CharacterBody2D
 
-
 @export var speed: float = 200.0
-@export var double_jump_velocity: float = -100
 
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var animation_tree : AnimationTree = $AnimationTree
@@ -10,7 +8,6 @@ extends CharacterBody2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var has_double_jumped: bool = false
 var animation_locked: bool = false
 var direction: Vector2 = Vector2.ZERO
 var was_in_air: bool = false
@@ -24,20 +21,10 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 		was_in_air = true
 	else:
-		has_double_jumped = false
-		
 		if was_in_air == true:
 			land()
 		
 		was_in_air = false
-
-	# Handle Jump.
-	if Input.is_action_just_pressed("character_jump"):
-		if is_on_floor():
-			#jump()
-			pass
-		elif not has_double_jumped:
-			double_jump()
 			
 	direction = Input.get_vector("character_left", "character_right", "character_jump", "character_down")
 	
@@ -60,13 +47,6 @@ func update_character_direction():
 		sprite.set_flip_h(true)
 	elif velocity.x > 0:
 		sprite.set_flip_h(false)
-
-func double_jump():
-	#Handle double jump in the air.
-	velocity.y = double_jump_velocity
-	#animated_sprite.play("jump_double")
-	animation_locked = true
-	has_double_jumped = true
 
 func land():
 	#animated_sprite.play("jump_end")
